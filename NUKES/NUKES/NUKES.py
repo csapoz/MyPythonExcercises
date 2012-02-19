@@ -1,33 +1,35 @@
 #!/usr/bin/python
 
-readline = raw_input()
-splitted = readline.split()
-input = []
-for item in splitted:
-	input.append(int(item))
-
 # value, limit, numOfChamber
+def readInputs():
+    readline = raw_input()
+    splitted = readline.split()
+    input = []
+    for item in splitted:
+        input.append(int(item))
+    return input
 
-#input = [6,4,17]
-
-def representValueIn(value, system):
-    result = []
-    if system < 2:
+class Nukes:
+    def representValueIn(self, value, system):
+        result = []
+        if system < 2:
+            return result
+        while value > 0:
+            result.append(value % system)
+            value = value / system
         return result
-    while value > 0:
-        result.append(value % system)
-        value = value / system
-    return result
 
+    def getChanbersStatus(self, atoms, limit, numOfChambers):
+        filledChambers = Nukes().representValueIn(atoms, limit + 1)
+        result = ''
+        for i in range(numOfChambers):
+            if i >= len(filledChambers):
+                result += str(0) + ' '
+            else:
+                result += str(filledChambers[i]) + ' '
+        return result
 
-filledChambers = representValueIn(input[0], input[1]+1)
+input = readInputs()
+print Nukes().getChanbersStatus(input[0], input[1], input[2])
 
-result = ''
-for i in range(input[2]):
-    if i >= len(filledChambers):
-        result += str(0) + ' '
-    else:
-        result += str(filledChambers[i]) + ' '
-
-print result
 
